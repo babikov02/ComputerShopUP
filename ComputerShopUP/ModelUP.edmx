@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ComputerShopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerSet">
+          <Key>
+            <PropertyRef Name="id_customer" />
+          </Key>
+          <Property Name="id_customer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OrderSet">
+          <Key>
+            <PropertyRef Name="id_order" />
+          </Key>
+          <Property Name="id_order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_staff" Type="int" Nullable="false" />
+          <Property Name="id_customer" Type="int" Nullable="false" />
+          <Property Name="id_product" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductsSet">
+          <Key>
+            <PropertyRef Name="id_product" />
+          </Key>
+          <Property Name="id_product" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="Kol" Type="int" Nullable="false" />
+          <Property Name="Mark" Type="float" Nullable="false" />
+          <Property Name="Pr_group" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="StaffSet">
+          <Key>
+            <PropertyRef Name="id_staff" />
+          </Key>
+          <Property Name="id_staff" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Purpose" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Order_Customer">
+          <End Role="CustomerSet" Type="Self.CustomerSet" Multiplicity="1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerSet">
+              <PropertyRef Name="id_customer" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="id_customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Products">
+          <End Role="ProductsSet" Type="Self.ProductsSet" Multiplicity="1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductsSet">
+              <PropertyRef Name="id_product" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="id_product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Staff">
+          <End Role="StaffSet" Type="Self.StaffSet" Multiplicity="1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffSet">
+              <PropertyRef Name="id_staff" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="id_staff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ComputerShopModelContainer">
+          <EntitySet Name="CustomerSet" EntityType="Self.CustomerSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderSet" EntityType="Self.OrderSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductsSet" EntityType="Self.ProductsSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StaffSet" EntityType="Self.StaffSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
+            <End Role="CustomerSet" EntitySet="CustomerSet" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Products" Association="Self.FK_Order_Products">
+            <End Role="ProductsSet" EntitySet="ProductsSet" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Staff" Association="Self.FK_Order_Staff">
+            <End Role="StaffSet" EntitySet="StaffSet" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ComputerShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CustomerSet">
+          <Key>
+            <PropertyRef Name="id_customer" />
+          </Key>
+          <Property Name="id_customer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OrderSet" Relationship="Self.FK_Order_Customer" FromRole="CustomerSet" ToRole="OrderSet" />
+        </EntityType>
+        <EntityType Name="OrderSet">
+          <Key>
+            <PropertyRef Name="id_order" />
+          </Key>
+          <Property Name="id_order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_staff" Type="Int32" Nullable="false" />
+          <Property Name="id_customer" Type="Int32" Nullable="false" />
+          <Property Name="id_product" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CustomerSet" Relationship="Self.FK_Order_Customer" FromRole="OrderSet" ToRole="CustomerSet" />
+          <NavigationProperty Name="ProductsSet" Relationship="Self.FK_Order_Products" FromRole="OrderSet" ToRole="ProductsSet" />
+          <NavigationProperty Name="StaffSet" Relationship="Self.FK_Order_Staff" FromRole="OrderSet" ToRole="StaffSet" />
+        </EntityType>
+        <EntityType Name="ProductsSet">
+          <Key>
+            <PropertyRef Name="id_product" />
+          </Key>
+          <Property Name="id_product" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="Kol" Type="Int32" Nullable="false" />
+          <Property Name="Mark" Type="Double" Nullable="false" />
+          <Property Name="Pr_group" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OrderSet" Relationship="Self.FK_Order_Products" FromRole="ProductsSet" ToRole="OrderSet" />
+        </EntityType>
+        <EntityType Name="StaffSet">
+          <Key>
+            <PropertyRef Name="id_staff" />
+          </Key>
+          <Property Name="id_staff" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Purpose" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OrderSet" Relationship="Self.FK_Order_Staff" FromRole="StaffSet" ToRole="OrderSet" />
+        </EntityType>
+        <Association Name="FK_Order_Customer">
+          <End Role="CustomerSet" Type="Self.CustomerSet" Multiplicity="1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerSet">
+              <PropertyRef Name="id_customer" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="id_customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Products">
+          <End Role="ProductsSet" Type="Self.ProductsSet" Multiplicity="1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductsSet">
+              <PropertyRef Name="id_product" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="id_product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Staff">
+          <End Role="StaffSet" Type="Self.StaffSet" Multiplicity="1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffSet">
+              <PropertyRef Name="id_staff" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="id_staff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ComputerShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerSet" EntityType="Self.CustomerSet" />
+          <EntitySet Name="OrderSet" EntityType="Self.OrderSet" />
+          <EntitySet Name="ProductsSet" EntityType="Self.ProductsSet" />
+          <EntitySet Name="StaffSet" EntityType="Self.StaffSet" />
+          <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
+            <End Role="CustomerSet" EntitySet="CustomerSet" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Products" Association="Self.FK_Order_Products">
+            <End Role="ProductsSet" EntitySet="ProductsSet" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Staff" Association="Self.FK_Order_Staff">
+            <End Role="StaffSet" EntitySet="StaffSet" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ComputerShopModelContainer" CdmEntityContainer="ComputerShopEntities">
+          <EntitySetMapping Name="CustomerSet">
+            <EntityTypeMapping TypeName="ComputerShopModel.CustomerSet">
+              <MappingFragment StoreEntitySet="CustomerSet">
+                <ScalarProperty Name="id_customer" ColumnName="id_customer" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderSet">
+            <EntityTypeMapping TypeName="ComputerShopModel.OrderSet">
+              <MappingFragment StoreEntitySet="OrderSet">
+                <ScalarProperty Name="id_order" ColumnName="id_order" />
+                <ScalarProperty Name="id_staff" ColumnName="id_staff" />
+                <ScalarProperty Name="id_customer" ColumnName="id_customer" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsSet">
+            <EntityTypeMapping TypeName="ComputerShopModel.ProductsSet">
+              <MappingFragment StoreEntitySet="ProductsSet">
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Kol" ColumnName="Kol" />
+                <ScalarProperty Name="Mark" ColumnName="Mark" />
+                <ScalarProperty Name="Pr_group" ColumnName="Pr_group" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StaffSet">
+            <EntityTypeMapping TypeName="ComputerShopModel.StaffSet">
+              <MappingFragment StoreEntitySet="StaffSet">
+                <ScalarProperty Name="id_staff" ColumnName="id_staff" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
